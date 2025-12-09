@@ -20,6 +20,7 @@ jobs:
     defaults:
       run:
         working-directory: ./tofu_xc_resources
+    needs: pre-destroy
     env:
       VES_P12_PASSWORD: ${{ secrets.VES_P12_PASSWORD }}
       VES_P12_CONTENT: ${{ secrets.VES_P12_CONTENT }}
