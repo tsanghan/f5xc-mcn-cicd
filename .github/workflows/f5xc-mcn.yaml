@@ -109,7 +109,7 @@ jobs:
     - name: Tofu Apply
       # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: |
-        tofu apply "xc-mcn.tfplan" -auto-approve
+        tofu apply "xc-mcn.tfplan"
 
     - name: Tofu output
       id: kubeconfig
