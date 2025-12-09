@@ -43,7 +43,7 @@ resource "volterra_healthcheck" "my_health_check" {
   jitter_percent      = local.health_check["jitter_percent"]
 
   depends_on = [
-    volterra_namespace.my_namespace,
+    time_sleep.wait_for_namespace,
   ]
 }
 
@@ -217,7 +217,14 @@ resource "volterra_tf_params_action" "apply_aws_vpc" {
   ignore_on_update = true
 }
 
-resource "time_sleep" "wait" {
+resource "time_sleep" "wait_for_namespace" {
+  create_duration  = "60s"
+  destroy_duration = "10s"
+
+  depends_on = [volterra_namespace.my_namespace]
+}
+
+resource "time_sleep" "wait_for_vsite" {
   create_duration  = "10s"
   destroy_duration = "60s"
 
@@ -234,7 +241,7 @@ resource "volterra_virtual_k8s" "my_vk8s" {
 
   depends_on = [
     volterra_namespace.my_namespace,
-    time_sleep.wait
+    time_sleep.wait_for_vsite
   ]
 }
 
