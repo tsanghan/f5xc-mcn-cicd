@@ -125,11 +125,13 @@ jobs:
     # environment: dev
 
     steps:
+    - name: Checkout
+      uses: actions/checkout@v4
 
     - name: Kube-linter
       uses: stackrox/kube-linter-action@v1
       with:
-        directory: ./
+        directory: ./manifests
 
     - name: kubectl install
       uses: azure/setup-kubectl@v4
