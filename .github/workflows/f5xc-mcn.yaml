@@ -19,6 +19,9 @@ jobs:
 
   tflint:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./tofu_xc_resources
     needs: pre-deploy
     steps:
       - name: Check out repository code
@@ -35,7 +38,6 @@ jobs:
 
       - name: Init TFLint
         run: |
-          cd tofu_xc_resources
           tflint --init
         env:
           # https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting
@@ -43,7 +45,6 @@ jobs:
 
       - name: Run TFLint
         run: |
-          cd tofu_xc_resources
           tflint -f compact
 
   deploy-f5xc:
@@ -127,7 +128,7 @@ jobs:
     - name: Kube-linter
       uses: stackrox/kube-linter-action@v1
       with:
-        directory: manifests
+        directory: ./
 
     - name: kubectl install
       uses: azure/setup-kubectl@v4
