@@ -48,11 +48,12 @@ jobs:
           tflint -f compact
 
   deploy-f5xc:
-    name: Deploy-f5xc
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./tofu_xc_resources
+    outputs:
+      kubeconfig: ${{ steps.kubeconfig.outputs.kubeconfig }}
     env:
       VES_P12_PASSWORD: ${{ secrets.VES_P12_PASSWORD }}
       VES_P12_CONTENT: ${{ secrets.VES_P12_CONTENT }}
@@ -111,11 +112,11 @@ jobs:
         tofu apply -auto-approve
 
     - name: Tofu output
+      id: kubeconfig
       run: |
-        tofu output -raw my_vk8s_kubeconfig | base64 -d > ../manifests/kube-config
+        echo "kubeconfig=$(tofu output -raw my_vk8s_kubeconfig)" >> "$GITHUB_OUTPUT"
 
   deploy-k8s:
-    name: Deploy-k8s
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -136,5 +137,8 @@ jobs:
         version: 'v1.34.2'
 
     - name: kubectl apply
+      env:
+        KUBECONFIG: ${{needs.deploy-f5xc.outputs.kubeconfig}}
       run: |
-        kubectl --kubeconfig=kube-config apply --server-side -f apply.yaml
+        echo $KUBECONFIG | base64 -d > ./kubeconfig
+        kubectl --kubeconfig=./kubeconfig apply --server-side -f apply.yaml
