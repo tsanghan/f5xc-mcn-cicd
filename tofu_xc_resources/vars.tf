@@ -5,7 +5,7 @@ variable "create_ves_namespace" {
 }
 
 variable "name" {
-  type    = string
+  type = string
   # default = "tsanghan"
   default = "tsanghan-brewz"
 }
@@ -31,7 +31,7 @@ variable "aws_region" {
 }
 
 variable "ssh_pub_key" {
-  type    = string
+  type = string
 }
 
 variable "aws_vpc_cidr" {
@@ -51,18 +51,18 @@ variable "outside_subnet_cidr_block" {
 
 ## Health check
 variable "health_check" {
-    type = object({
-      threshold           = number
-      interval            = number
-      timeout             = number
-      unhealthy_threshold = number
-      jitter_percent      = number
-    })
-    default = {
-      threshold           = 3
-      interval            = 15
-      timeout             = 3
-      unhealthy_threshold = 1
-      jitter_percent      = 30
+  type = object({
+    threshold           = number
+    interval            = number
+    timeout             = number
+    unhealthy_threshold = number
+    jitter_percent      = number
+  })
+  default = {
+    threshold           = 3
+    interval            = 15
+    timeout             = 3
+    unhealthy_threshold = 1
+    jitter_percent      = 30
   }
 }

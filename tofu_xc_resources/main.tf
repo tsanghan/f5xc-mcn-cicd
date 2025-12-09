@@ -4,9 +4,9 @@ resource "volterra_namespace" "my_namespace" {
 }
 
 resource "volterra_known_label_key" "volterra_known_label_key" {
-    key = "${local.name}-key"
-    namespace = "shared"
-    description = "Label-Key for ${local.name}"
+  key         = "${local.name}-key"
+  namespace   = "shared"
+  description = "Label-Key for ${local.name}"
 }
 
 resource "volterra_known_label" "my_label" {
@@ -15,7 +15,7 @@ resource "volterra_known_label" "my_label" {
   value       = "${local.name}-value"
   description = "Label for ${local.name}"
 
-  depends_on = [ volterra_known_label_key.volterra_known_label_key ]
+  depends_on = [volterra_known_label_key.volterra_known_label_key]
 }
 
 # resource "volterra_workload_flavor" "large_workload_flavor" {
@@ -174,7 +174,7 @@ resource "volterra_aws_vpc_site" "my_aws_vpc_site" {
 
   aws_cred {
     #name      = volterra_cloud_credentials.aws_cred.name
-    name = "learnf5-aws"
+    name      = "learnf5-aws"
     namespace = "system"
   }
 
@@ -226,7 +226,7 @@ resource "time_sleep" "wait" {
 
 resource "volterra_virtual_k8s" "my_vk8s" {
   name      = "${local.name}-vk8s"
-  namespace = "${local.namespace}"
+  namespace = local.namespace
   vsite_refs {
     name      = "${local.name}-vsite"
     namespace = "shared"
@@ -242,7 +242,7 @@ resource "volterra_api_credential" "my_kubeconfig" {
   created_at            = timestamp()
   name                  = "${local.name}-vk8s-api-cred"
   api_credential_type   = "KUBE_CONFIG"
-  virtual_k8s_namespace = "${local.namespace}"
+  virtual_k8s_namespace = local.namespace
   virtual_k8s_name      = "${local.name}-vk8s"
   expiry_days           = 14
 

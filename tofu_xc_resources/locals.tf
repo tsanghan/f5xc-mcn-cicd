@@ -67,11 +67,11 @@ locals {
   }
   ## Health check
   health_check = var.health_check
-#   health_check = {
-#     threshold           = 3
-#     interval            = 15
-#     timeout             = 3
-#     unhealthy_threshold = 1
-#     jitter_percent      = 30
-#   }
+  #   health_check = {
+  #     threshold           = 3
+  #     interval            = 15
+  #     timeout             = 3
+  #     unhealthy_threshold = 1
+  #     jitter_percent      = 30
+  #   }
 }
