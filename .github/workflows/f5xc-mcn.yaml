@@ -143,4 +143,4 @@ jobs:
         KUBECONFIG: ${{needs.deploy-f5xc.outputs.kubeconfig}}
       run: |
         echo $KUBECONFIG | base64 -d > ./kubeconfig
-        kubectl --kubeconfig=./kubeconfig apply --server-side -f apply.yaml
+        kubectl --kubeconfig=./kubeconfig apply --server-side -f app.yaml
