@@ -3,6 +3,9 @@ name: Deploy to F5XC
 on:
   push:
     branches: [ "dev" ]
+    paths-ignore:
+      - '**.md'
+      - '.github/**'
   workflow_dispatch:
 
 permissions:
